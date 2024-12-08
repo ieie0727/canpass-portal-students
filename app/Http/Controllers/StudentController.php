@@ -73,8 +73,6 @@ class StudentController extends Controller
             'given_name' => 'required|string|max:255',
             'email' => 'required|email|unique:students,email,' . $id,
             'birth_date' => 'required|date',
-            'admission_date' => 'required|date',
-            'status' => 'required|in:在籍,休塾,退塾',
         ]);
 
         // アップデート

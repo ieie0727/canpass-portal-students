@@ -1,7 +1,6 @@
 <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
   <!-- Sidebar Brand -->
 
-
   <!-- Divider -->
   <hr class="sidebar-divider my-0">
 
@@ -37,7 +36,7 @@
   --->
 
   <li class="nav-item active">
-    <a class="nav-link" href="{{ route('home') }}">
+    <a class="nav-link" href="{{ route('students.show', ['id' => $user->id]) }}">
       <i class="fas fa-user"></i>
       <span>プロフィール</span>
     </a>

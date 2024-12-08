@@ -3,6 +3,16 @@
 @section('content')
 <div class="container">
   <h3><i class="bi bi-pencil-square"></i> 生徒情報編集</h3>
+  @if ($errors->any())
+  <div class="alert alert-danger">
+    <ul>
+      @foreach ($errors->all() as $error)
+      <li>{{ $error }}</li>
+      @endforeach
+    </ul>
+  </div>
+  @endif
+
   <div class="card">
     <div class="card-body">
       <form method="POST" action="{{ route('students.update', ['id' => $student->id]) }}">
@@ -61,7 +71,7 @@
 
         <!-- ボタン -->
         <div class="d-flex">
-          <a href="{{ route('students.show', ['id' => $student->id]) }}" class="btn btn-secondary mr-3">戻る</a>
+          <a href="{{ route('students.show', ['id' => $student->id]) }}" class="btn btn-secondary me-3">戻る</a>
           <button type="submit" class="btn btn-primary">保存</button>
         </div>
       </form>

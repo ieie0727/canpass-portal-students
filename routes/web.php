@@ -2,7 +2,6 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Controllers\StudentContoroller;
 use App\Http\Controllers\StudentController;
 
 // 認証ルート
