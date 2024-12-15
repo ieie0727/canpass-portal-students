@@ -4,7 +4,7 @@ return [
 
     'defaults' => [
         'guard' => env('AUTH_GUARD', 'web'),
-        'passwords' => 'users',
+        'passwords' => env('AUTH_PASSWORD_BROKER', 'students'),
     ],
 
     'guards' => [
@@ -22,7 +22,7 @@ return [
     ],
 
     'passwords' => [
-        'users' => [
+        'students' => [
             'provider' => 'students',
             'table' => 'password_reset_tokens',
             'expire' => 60,
@@ -30,6 +30,5 @@ return [
         ],
     ],
 
-    'password_timeout' => 10800,
-
+    'password_timeout' => env('AUTH_PASSWORD_TIMEOUT', 10800),
 ];

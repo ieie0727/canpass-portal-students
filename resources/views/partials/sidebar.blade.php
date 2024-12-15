@@ -20,7 +20,7 @@
   </li>
 
   <li class="nav-item active">
-    <a class="nav-link" href="{{ route('home') }}">
+    <a class="nav-link" href="{{ route('schools.index',['id'=>$user->id,'grade'=>1]) }}">
       <i class="fa-solid fa-school"></i>
       <span>学校の成績</span>
     </a>
