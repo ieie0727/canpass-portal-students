@@ -2,11 +2,11 @@
 
 @section('content')
 <div class="container">
-  @if(isset($message))
-  <div class="alert alert-warning text-center">
-    {{ $message }}
+  @if (session('success'))
+  <div class="alert alert-success text-center">
+    {{ session('success') }}
   </div>
-  @else
+  @endif
 
   <!-- 名前表示と学年プルダウン -->
   <div class="d-flex justify-content-between align-items-end">
@@ -19,6 +19,7 @@
       </select>
     </form>
   </div>
+
 
   <!-- 定期テストのテーブル -->
   <h4 class="text-dark mb-2">定期テスト</h4>
@@ -40,15 +41,18 @@
             <td>{{ $SCORE_OBJ[$i] }}</td>
             @foreach ($SUBJECT_COLUMNS as $subject)
             @php
-            $score =$scores_term->{$subject} ?? 0;
+            $score = $scores_term->{$subject} ?? 0;
             @endphp
-            <td>{{ $score!==0 ? $score : '-' }}</td>
+            <td>{{ $score !== 0 ? $score : '-' }}</td>
             @endforeach
+            <td><a href="{{ route('schools.scores.edit',['id'=>$scores_term->id]) }}" class="btn btn-primary">編集</a>
+            </td>
           </tr>
           @endfor
       </tbody>
     </table>
   </div>
+
 
   <!-- 内申点のテーブル -->
   <h4 class="text-dark mb-2">内申点</h4>
@@ -70,16 +74,17 @@
             <td>{{ $GRADE_OBJ[$i] }}</td>
             @foreach ($SUBJECT_COLUMNS as $subject)
             @php
-            $grade =$grades_term->{$subject} ?? 0;
+            $grade = $grades_term->{$subject} ?? 0;
             @endphp
-            <td>{{ $grade!==0 ? $grade : '-' }}</td>
+            <td>{{ $grade !== 0 ? $grade : '-' }}</td>
             @endforeach
+            <td><a href="{{ route('schools.grades.edit',['id'=>$grades_term->id]) }}" class="btn btn-success">編集</a>
+            </td>
           </tr>
           @endfor
       </tbody>
     </table>
   </div>
-  @endif
 </div>
 @endsection
 

@@ -7,7 +7,6 @@ use App\Models\Grade;
 use App\Models\Score;
 use App\Models\Student;
 
-
 class SchoolController extends Controller
 {
     // 定数として宣言
@@ -50,7 +49,6 @@ class SchoolController extends Controller
         'industrial',
     ];
 
-
     /** 初期動作 */
     public function __construct()
     {
@@ -59,8 +57,6 @@ class SchoolController extends Controller
         view()->share('SUBJECT_NAMES', self::SUBJECT_NAMES);
         view()->share('SUBJECT_COLUMNS', self::SUBJECT_COLUMNS);
     }
-
-
 
     /** 一覧表示 */
     public function index($id, Request $request)
@@ -85,62 +81,102 @@ class SchoolController extends Controller
             ->where('grade', $grade)
             ->get();
 
-        return view('schools.index', compact('student', 'scores', 'grades'));
+        return view('schools.index', compact('student', 'grade', 'scores', 'grades'));
     }
-
-
-
-    /** 新規画面 */
-    public function create() {}
-
-
-    /** 新規処理 */
-    public function store(Request $request) {}
-
-
 
     /** 定期テスト編集 */
     public function editScore($id)
     {
-        $score = Score::findOrFail($id);
-        return view('schools.scores.edit', compact('score'));
+        $score = Score::where('id', $id)->first();
+        return view('schools.scoreEdit', compact('score'));
     }
 
     public function updateScore(Request $request, $id)
     {
+        // バリデーション
         $request->validate([
             'japanese' => 'required|integer|min:0|max:100',
             'math' => 'required|integer|min:0|max:100',
-            // 他の科目も同様に
+            'english' => 'required|integer|min:0|max:100',
+            'social' => 'required|integer|min:0|max:100',
+            'science' => 'required|integer|min:0|max:100',
+            'music' => 'nullable|integer|min:0|max:100',
+            'art' => 'nullable|integer|min:0|max:100',
+            'physical' => 'nullable|integer|min:0|max:100',
+            'industrial' => 'nullable|integer|min:0|max:100',
         ]);
 
+        // スコアの取得
         $score = Score::findOrFail($id);
-        $score->update($request->all());
 
-        return redirect()->route('schools.index', ['id' => $score->student_id, 'grade' => $score->grade])
-            ->with('success', 'スコアが更新されました。');
+        // データの更新
+        $score->update([
+            'japanese' => $request->japanese,
+            'math' => $request->math,
+            'english' => $request->english,
+            'social' => $request->social,
+            'science' => $request->science,
+            'music' => $request->music,
+            'art' => $request->art,
+            'physical' => $request->physical,
+            'industrial' => $request->industrial,
+        ]);
+
+        // リダイレクト
+        return redirect()->route('schools.index', [
+            'id' => $score->student_id,
+            'grade' => $score->grade,
+        ])->with('success', 'スコアが更新されました。');
     }
+
 
     /** 内申点編集 */
     public function editGrade($id)
     {
+        // 指定されたIDの内申点データを取得
         $grade = Grade::findOrFail($id);
-        return view('schools.grades.edit', compact('grade'));
+
+        // 編集用のビューを表示
+        return view('schools.gradeEdit', compact('grade'));
     }
+
 
     public function updateGrade(Request $request, $id)
     {
+        // バリデーション
         $request->validate([
             'japanese' => 'required|integer|min:1|max:5',
             'math' => 'required|integer|min:1|max:5',
-            // 他の科目も同様に
+            'english' => 'required|integer|min:1|max:5',
+            'social' => 'required|integer|min:1|max:5',
+            'science' => 'required|integer|min:1|max:5',
+            'music' => 'nullable|integer|min:1|max:5',
+            'art' => 'nullable|integer|min:1|max:5',
+            'physical' => 'nullable|integer|min:1|max:5',
+            'industrial' => 'nullable|integer|min:1|max:5',
         ]);
 
+        // 内申点データの取得
         $grade = Grade::findOrFail($id);
-        $grade->update($request->all());
 
-        return redirect()->route('schools.index', ['id' => $grade->student_id, 'grade' => $grade->grade])
-            ->with('success', '内申点が更新されました。');
+        // データの更新
+        $grade->update([
+            'japanese' => $request->japanese,
+            'math' => $request->math,
+            'english' => $request->english,
+            'social' => $request->social,
+            'science' => $request->science,
+            'music' => $request->music,
+            'art' => $request->art,
+            'physical' => $request->physical,
+            'industrial' => $request->industrial,
+        ]);
+
+        // リダイレクト
+        return redirect()->route('schools.index', [
+            'id' => $grade->student_id,
+            'grade' => $grade->grade,
+        ])->with('success', '内申点が更新されました。');
     }
 
     /** 削除処理 */

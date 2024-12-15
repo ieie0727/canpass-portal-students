@@ -19,20 +19,20 @@ class ScoresSeeder extends Seeder
 
         foreach ($students as $student_id) {
             for ($grade = 1; $grade <= 3; $grade++) {
-                for ($term = 1; $term <= 4; $term++) {
+                for ($term = 1; $term <= 5; $term++) {
                     Score::create([
                         'student_id' => $student_id,
                         'grade' => $grade,
                         'term' => $term,
-                        'japanese' => rand(0, 100),
-                        'math' => rand(0, 100),
-                        'english' => rand(0, 100),
-                        'social' => rand(0, 100),
-                        'science' => rand(0, 100),
-                        'music' => rand(0, 100),
-                        'art' => rand(0, 100),
-                        'physical' => rand(0, 100),
-                        'industrial' => rand(0, 100),
+                        'japanese' => rand(1, 100),
+                        'math' => rand(1, 100),
+                        'english' => rand(1, 100),
+                        'social' => rand(1, 100),
+                        'science' => rand(1, 100),
+                        'music' => rand(1, 100),
+                        'art' => rand(1, 100),
+                        'physical' => rand(1, 100),
+                        'industrial' => rand(1, 100),
                     ]);
                 }
             }

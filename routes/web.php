@@ -42,9 +42,9 @@ Route::controller(SchoolController::class)
     ->prefix('schools')
     ->name('schools.')
     ->group(function () {
-        Route::get('{id}', 'index')->name('index'); // 一覧表示
-        Route::get('scores/edit/{id}', 'editScore')->name('scores.edit'); // スコア編集画面
-        Route::put('scores/update/{id}', 'updateScore')->name('scores.update'); // スコア編集処理
-        Route::get('grades/edit/{id}', 'editGrade')->name('grades.edit'); // 内申点編集画面
-        Route::put('grades/update/{id}', 'updateGrade')->name('grades.update'); // 内申点編集処理
+        Route::get('{id}', 'index')->name('index');
+        Route::get('scores/edit/{id}', 'editScore')->name('scores.edit');
+        Route::put('scores/update/{id}', 'updateScore')->name('scores.update');
+        Route::get('grades/edit/{id}', 'editGrade')->name('grades.edit');
+        Route::put('grades/update/{id}', 'updateGrade')->name('grades.update');
     });
