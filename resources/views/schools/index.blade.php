@@ -8,10 +8,14 @@
   </div>
   @endif
 
+  @if ($grade>3)
+  @else
+
+
   <!-- 名前表示と学年プルダウン -->
   <div class="d-flex justify-content-between align-items-end">
     <h2>{{ $student->family_name }} {{ $student->given_name }}さんの成績</h2>
-    <form method="GET" action="{{ route('schools.index', ['id' => $student->id]) }}" class="mb-2">
+    <form method="GET" action="{{ route('schools.index') }}" class="mb-2">
       <select name="grade" class="form-select" onchange="this.form.submit()" style="width: auto; margin-top: 8px;">
         <option value="1" {{ request('grade')==='1' ? 'selected' : '' }}>１年生</option>
         <option value="2" {{ request('grade')==='2' ? 'selected' : '' }}>２年生</option>
@@ -45,7 +49,7 @@
             @endphp
             <td>{{ $score !== 0 ? $score : '-' }}</td>
             @endforeach
-            <td><a href="{{ route('schools.scores.edit',['id'=>$scores_term->id]) }}" class="btn btn-primary">編集</a>
+            <td><a href="{{ route('schools.scores.edit',$scores_term->id) }}" class="btn btn-primary">編集</a>
             </td>
           </tr>
           @endfor
@@ -78,13 +82,14 @@
             @endphp
             <td>{{ $grade !== 0 ? $grade : '-' }}</td>
             @endforeach
-            <td><a href="{{ route('schools.grades.edit',['id'=>$grades_term->id]) }}" class="btn btn-success">編集</a>
+            <td><a href="{{ route('schools.grades.edit',$grades_term->id) }}" class="btn btn-success">編集</a>
             </td>
           </tr>
           @endfor
       </tbody>
     </table>
   </div>
+  @endif
 </div>
 @endsection
 

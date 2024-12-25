@@ -15,7 +15,7 @@
 
   <div class="card">
     <div class="card-body">
-      <form method="POST" action="{{ route('students.update', ['id' => $student->id]) }}">
+      <form method="POST" action="{{ route('students.update') }}">
         @csrf
         @method('PUT')
 
@@ -71,7 +71,7 @@
 
         <!-- ボタン -->
         <div class="d-flex">
-          <a href="{{ route('students.show', ['id' => $student->id]) }}" class="btn btn-secondary me-3">戻る</a>
+          <a href="{{ route('students.show') }}" class="btn btn-secondary me-3">戻る</a>
           <button type="submit" class="btn btn-primary">保存</button>
         </div>
       </form>

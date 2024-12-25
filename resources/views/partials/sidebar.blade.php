@@ -13,14 +13,14 @@
   </li>
 
   <li class="nav-item active">
-    <a class="nav-link" href="{{ route('home') }}">
+    <a class="nav-link" href="{{ route('tests.home') }}">
       <i class="fa-solid fa-pen-nib"></i>
       <span>学習・テスト</span>
     </a>
   </li>
 
   <li class="nav-item active">
-    <a class="nav-link" href="{{ route('schools.index',['id'=>$user->id,'grade'=>1]) }}">
+    <a class="nav-link" href="{{ route('schools.index') }}">
       <i class="fa-solid fa-school"></i>
       <span>学校の成績</span>
     </a>
@@ -36,7 +36,7 @@
   --->
 
   <li class="nav-item active">
-    <a class="nav-link" href="{{ route('students.show', ['id' => $user->id]) }}">
+    <a class="nav-link" href="{{ route('students.show') }}">
       <i class="fas fa-user"></i>
       <span>プロフィール</span>
     </a>

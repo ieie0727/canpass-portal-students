@@ -1,9 +1,10 @@
 <?php
 
-use App\Http\Controllers\SchoolController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\StudentController;
+use App\Http\Controllers\SchoolController;
+use App\Http\Controllers\TestController;
 
 // 認証ルート
 Auth::routes();
@@ -24,9 +25,9 @@ Route::controller(StudentController::class)
     ->prefix('students')
     ->name('students.')
     ->group(function () {
-        Route::get('{id}', 'show')->name('show');
-        Route::get('edit/{id}', 'edit')->name('edit');
-        Route::put('update/{id}', 'update')->name('update');
+        Route::get('/', 'show')->name('show');
+        Route::get('edit', 'edit')->name('edit');
+        Route::put('update', 'update')->name('update');
     });
 
 /*
@@ -42,9 +43,31 @@ Route::controller(SchoolController::class)
     ->prefix('schools')
     ->name('schools.')
     ->group(function () {
-        Route::get('{id}', 'index')->name('index');
-        Route::get('scores/edit/{id}', 'editScore')->name('scores.edit');
-        Route::put('scores/update/{id}', 'updateScore')->name('scores.update');
-        Route::get('grades/edit/{id}', 'editGrade')->name('grades.edit');
-        Route::put('grades/update/{id}', 'updateGrade')->name('grades.update');
+        Route::get('/', 'index')->name('index');
+        Route::get('scores/edit/{score_id}', 'editScore')->name('scores.edit');
+        Route::put('scores/update/{score_id}', 'updateScore')->name('scores.update');
+        Route::get('grades/edit/{grade_id}', 'editGrade')->name('grades.edit');
+        Route::put('grades/update/{grade_id}', 'updateGrade')->name('grades.update');
+    });
+
+/*
+|--------------------------------------------------------------------------
+| Test関連ルート
+|--------------------------------------------------------------------------
+| 学習・テストに関するルート設定
+| /tests に関連したルートをまとめています。
+|--------------------------------------------------------------------------
+*/
+Route::controller(TestController::class)
+    ->middleware('auth')
+    ->prefix('tests')
+    ->name('tests.')
+    ->group(function () {
+        Route::get('home', 'home')->name('home');
+        Route::get('{subject}', 'subject')->name('subject');
+        Route::get('try/{section_id}', 'try')->name('try');
+        Route::post('submit/{section_id}', 'submit')->name('submit');
+        Route::get('retry/{section_id}', 'retry')->name('retry');
+        Route::post('resubmit/{section_id}', 'resubmit')->name('resubmit');
+        Route::get('record/{section_id}', 'record')->name('record');
     });

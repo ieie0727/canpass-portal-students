@@ -47,8 +47,8 @@
         </tbody>
       </table>
 
-      <div class="d-flex justify-content-end">
-        <a href="{{ route('students.edit', ['id'=>$student->id]) }}" class="btn btn-primary">編集</a>
+      <div class="d-flex">
+        <a href="{{ route('students.edit') }}" class="btn btn-primary">編集</a>
       </div>
     </div>
   </div>

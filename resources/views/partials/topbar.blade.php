@@ -23,7 +23,7 @@
       <!-- Dropdown Menu -->
       <ul class="dropdown-menu dropdown-menu-end shadow animated--grow-in" aria-labelledby="userDropdown">
         <li>
-          <a class="dropdown-item" href="{{ route('students.show', ['id' => $user->id]) }}">
+          <a class="dropdown-item" href="{{ route('students.show') }}">
             <i class="fas fa-user fa-sm fa-fw me-2 text-gray-400"></i>
             プロフィール
           </a>

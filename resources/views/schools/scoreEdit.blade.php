@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container">
-  <h2 class="mb-4">{{ $score->grade }}年生　{{ $SCORE_OBJ[$score->term]}}の点数登録</h2>
+  <h2 class="mb-4">{{ $score->grade }}年生 {{ $SCORE_OBJ[$score->term] }}の点数登録</h2>
 
   @if ($errors->any())
   <div class="alert alert-danger">
@@ -14,22 +14,37 @@
   </div>
   @endif
 
-  <form method="POST" action="{{ route('schools.scores.update', ['id' => $score->id]) }}">
+  <form method="POST" action="{{ route('schools.scores.update', $score->id) }}">
     @csrf
     @method('PUT')
 
-    @foreach ($SUBJECT_NAMES as $index => $subject)
-    <div class="mb-3">
-      <label for="{{ $SUBJECT_COLUMNS[$index] }}" class="form-label">{{ $subject }}</label>
-      <input type="number" id="{{ $SUBJECT_COLUMNS[$index] }}" name="{{ $SUBJECT_COLUMNS[$index] }}"
-        class="form-control" value="{{ old($SUBJECT_COLUMNS[$index], $score->{$SUBJECT_COLUMNS[$index]} ?? '') }}"
-        min="0" max="100">
+    <div class="table-responsive">
+      <table class="table table-bordered shadow-sm">
+        <thead class="table-light">
+          <tr>
+            <th scope="col" class="text-center" style="width: 50%;">科目</th>
+            <th scope="col" class="text-center" style="width: 50%;">点数</th>
+          </tr>
+        </thead>
+        <tbody>
+          @foreach ($SUBJECT_NAMES as $index => $subject)
+          <tr>
+            <td class="align-middle text-center">{{ $subject }}</td>
+            <td>
+              <input type="number" id="{{ $SUBJECT_COLUMNS[$index] }}" name="{{ $SUBJECT_COLUMNS[$index] }}"
+                class="form-control"
+                value="{{ old($SUBJECT_COLUMNS[$index], $score->{$SUBJECT_COLUMNS[$index]} ?? '') }}" min="0" max="100">
+            </td>
+          </tr>
+          @endforeach
+        </tbody>
+      </table>
     </div>
-    @endforeach
 
-    <a href="{{ route('schools.index', ['id' => $score->student_id, 'grade' => $score->grade]) }}"
-      class="btn btn-secondary me-3">戻る</a>
-    <button type="submit" class="btn btn-primary">更新</button>
+    <div class="d-flex mt-3 mb-3">
+      <a href="{{ route('schools.index', ['grade' => $score->grade]) }}" class="btn btn-secondary me-3">戻る</a>
+      <button type="submit" class="btn btn-primary">更新</button>
+    </div>
   </form>
 </div>
 @endsection

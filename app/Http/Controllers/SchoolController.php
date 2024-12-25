@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Grade;
 use App\Models\Score;
 use App\Models\Student;
+use Illuminate\Support\Facades\Auth;
 
 class SchoolController extends Controller
 {
@@ -59,19 +60,12 @@ class SchoolController extends Controller
     }
 
     /** 一覧表示 */
-    public function index($id, Request $request)
+    public function index(Request $request)
     {
+        $id = Auth::user()->id;
         $student = Student::find($id);
         $grade = $request->query('grade');
-
-        // 学年が指定されていない場合の処理
-        if (!$grade) {
-            return view('schools.index', [
-                'message' => '学年を指定してください。',
-                'scores' => [],
-                'grades' => []
-            ]);
-        }
+        $grade = ($grade && 1 <= $grade && $grade <= 3) ? $grade : 1;
 
         $scores = Score::where('student_id', $id)
             ->where('grade', $grade)
@@ -124,7 +118,6 @@ class SchoolController extends Controller
 
         // リダイレクト
         return redirect()->route('schools.index', [
-            'id' => $score->student_id,
             'grade' => $score->grade,
         ])->with('success', 'スコアが更新されました。');
     }
@@ -174,7 +167,6 @@ class SchoolController extends Controller
 
         // リダイレクト
         return redirect()->route('schools.index', [
-            'id' => $grade->student_id,
             'grade' => $grade->grade,
         ])->with('success', '内申点が更新されました。');
     }
